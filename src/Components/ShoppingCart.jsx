@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ShoppingCart.css'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { removeItemFromCart, clearCart, increaseItemQuantity, decreaseItemQuantity } from './CartSlice';
@@ -6,22 +6,21 @@ import { removeItemFromCart, clearCart, increaseItemQuantity, decreaseItemQuanti
 const ShoppingCart = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.cartItems);
-    const totalAmount  = cartItems.reduce((total, item) => total + item.price * item.quantity);
-
-    const handleRemoveItem = itemId => {
-        dispatch(removeItemFromCart(itemId));
+    const totalAmount = useSelector(state => state.cart.totalAmount);
+    const handleRemoveItem = item => {
+        dispatch(removeItemFromCart(item));
     };
 
     const handleClearCart = () => {
         dispatch(clearCart());
     };
 
-    const handleIncreaseQuantity = itemId => {
-        dispatch(increaseItemQuantity(itemId));
+    const handleIncreaseQuantity = item => {
+        dispatch(increaseItemQuantity(item.id));
     };
 
-    const handleDecreaseQuantity = itemId => {
-        dispatch(decreaseItemQuantity(itemId));
+    const handleDecreaseQuantity = item => {
+        dispatch(decreaseItemQuantity(item.id));
     };
 
     
@@ -34,10 +33,11 @@ const ShoppingCart = () => {
             <li key={item.id} classNam="cart-item">
                 <span>{item.name} - ${item.price}</span>
                 <div className="quantity-controls">
-                    <button className="quantity-control-btn" onClick={() => handleDecreaseQuantity(item.id)}>-</button>
-                    <button className="quantity-control-btn" onClick={() => handleIncreaseQuantity(item.id)}>+</button> 
+                    <button className="quantity-control-btn" onClick={() => handleDecreaseQuantity(item)}>-</button>
+                    <p>{item.quantity}</p>
+                    <button className="quantity-control-btn" onClick={() => handleIncreaseQuantity(item)}>+</button> 
                 </div>
-                <button className="remove-item-btn" onClick={() => handleRemoveItem(item.id)}>Remove</button>
+                <button className="remove-item-btn" onClick={() => handleRemoveItem(item)}>Remove</button>
             </li>
         ))}
       </ul>
