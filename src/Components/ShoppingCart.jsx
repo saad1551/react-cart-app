@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeItemFromCart, clearCart, increaseItemQuantity, decreaseItemQuantity } from './CartSlice';
 
 const ShoppingCart = () => {
-    const dispatch = useDisaptch();
+    const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.cartItems);
     const totalAmount  = cartItems.reduce((total, item) => total + item.price * item.quantity);
 
@@ -20,7 +20,7 @@ const ShoppingCart = () => {
         dispatch(increaseItemQuantity(itemId));
     };
 
-    const handleDecreaseQuantity = itemid => {
+    const handleDecreaseQuantity = itemId => {
         dispatch(decreaseItemQuantity(itemId));
     };
 

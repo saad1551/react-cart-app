@@ -8,7 +8,7 @@ const ProductList = () => {
     const [disabledProducts, setDisabledProducts] = useState([]);
 
     const handleAddToCart = product => {
-        dispatch(addItemToCart(prodcut));
+        dispatch(addItemToCart(product));
         setDisabledProducts([ ...disabledProducts, product.id]);
     };
   const products = [
